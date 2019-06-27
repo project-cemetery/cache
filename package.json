@@ -1,0 +1,36 @@
+{
+  "name": "@solid-soda/cache",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "repository": "git@github.com:solid-soda/cache.git",
+  "author": "Igor Kamyshev <igor@kamyshev.me>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "prepare": "yarn build",
+    "ci": "yarn types && yarn test && yarn s lint",
+    "test": "jest",
+    "types": "tsc --noEmit lib",
+    "s": "yarn soda"
+  },
+  "devDependencies": {
+    "@solid-soda/scripts": "^1.11.15",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "redis": "^2.8.0",
+    "redis-commands": "^1.5.0",
+    "then-redis": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn soda lint-staged",
+      "commit-msg": "yarn soda commitlint"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
