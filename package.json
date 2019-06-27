@@ -10,11 +10,12 @@
     "prepare": "yarn build",
     "ci": "yarn types && yarn test && yarn s lint",
     "test": "jest",
-    "types": "tsc --noEmit lib",
+    "types": "tsc --noEmit",
     "s": "yarn soda"
   },
   "devDependencies": {
     "@solid-soda/scripts": "^1.11.15",
+    "@types/jest": "^24.0.15",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.2"
