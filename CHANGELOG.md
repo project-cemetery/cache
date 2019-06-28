@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/solid-soda/cache/compare/v0.1.5...v0.2.0) (2019-06-28)
+
+
+### Features
+
+* **provider:** add file system provider ([eefabf1](https://github.com/solid-soda/cache/commit/eefabf1))
+* **serializer:** add serializers ([cb12262](https://github.com/solid-soda/cache/commit/cb12262))
+
+
+
 ### [0.1.5](https://github.com/solid-soda/cache/compare/v0.1.4...v0.1.5) (2019-06-27)
 
 
