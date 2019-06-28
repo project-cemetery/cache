@@ -80,6 +80,32 @@ const provider = new RedisProvider(credentials, serializer)
 export const cache = new Cache(provider)
 ```
 
+### FileSystemProvider
+
+1. Cache can be stored after restart application, it's just files on your disk.
+2. Cache can't be shared between any kind of applications, because it's just files on your disk.
+3. Cache can store only serializable value.
+
+```js
+import { Cache, FileSystemProvider } from '@solid-soda/cache'
+
+const provider = new FileSystemProvider({
+  baseDir: __dirname,
+})
+export const cache = new Cache(provider)
+```
+
+If you don't pass `baseDir` it will be use `os.tmpdir`.
+
+If you want to use custom serializer, just pass it to config in `FileSystemProvider` constructor. [More about serializers.](#serializer)
+
+```js
+import { Cache, FileSystemProvider } from '@solid-soda/cache'
+
+const provider = new FileSystemProvider({ baseDir: __dirname, serializer })
+export const cache = new Cache(provider)
+```
+
 ### Custom provider
 
 This library can includes only limited number of providers, but you can create custom provider and use it for cache. Just implement `CacheProvider` intreface.
