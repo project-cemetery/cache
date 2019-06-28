@@ -170,8 +170,8 @@ const fastSerizliser: Serializer = {
 
 ## Cache invalidation
 
-Will be released in 1.0.0
+Will be released in 1.1.0
 
 ## TypeScript decorator
 
-Will be released in 1.0.0
+Will be released in 1.1.0
