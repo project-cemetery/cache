@@ -37,6 +37,38 @@ if (!item) {
 }
 ```
 
+## Cache invalidation
+
+### Expiration
+
+`Cache#set` method has third argument `lifetime` (amount of mimilliseconds). You can pass it, and after this time cached item will be invalidate.
+
+It's a very simple mechanism:
+```ts
+import { Cache, InMemoryProvider } from '@solid-soda/cache'
+
+const provider = new InMemoryProvider()
+const cache = new Cache(provider)
+
+// ...
+
+async function doDeal() {
+  await cache.set('key', 'cached!', 1000)
+
+  await sleep(600)
+
+  const value1 = await cache.get('key') // 'cached!'
+
+  await sleep(600)
+
+  const value2 = await cache.get('key') // null
+}
+```
+
+### Tag invalidation
+
+Will be released in 1.1.0
+
 ## Providers
 
 You can use many cache providers in your application.
@@ -167,38 +199,6 @@ const fastSerizliser: Serializer = {
   },
 }
 ```
-
-## Cache invalidation
-
-### Expiration
-
-`Cache#set` method has third argument `lifetime` (amount of mimilliseconds). You can pass it, and after this time cached item will be invalidate.
-
-It's a very simple mechanism:
-```ts
-import { Cache, InMemoryProvider } from '@solid-soda/cache'
-
-const provider = new InMemoryProvider()
-const cache = new Cache(provider)
-
-// ...
-
-async function doDeal() {
-  await cache.set('key', 'cached!', 1000)
-
-  await sleep(600)
-
-  const value1 = await cache.get('key') // 'cached!'
-
-  await sleep(600)
-
-  const value2 = await cache.get('key') // null
-}
-```
-
-### Tag invalidation
-
-Will be released in 1.1.0
 
 ## TypeScript decorator
 
