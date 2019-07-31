@@ -12,22 +12,23 @@ interface Config {
   serializer?: Serializer
 }
 
+const defaultConfig: Config = {
+  baseDir: os.tmpdir(),
+  serializer: defaultSerializer,
+}
+
 export class FileSystemProvider implements CacheProvider {
   private readonly baseDir: string
   private readonly serializer: Serializer
 
-  constructor(config?: Config) {
-    if (config && config.baseDir) {
-      this.baseDir = config.baseDir
-    } else {
-      this.baseDir = os.tmpdir()
+  constructor(config: Config = {}) {
+    const realConfig = {
+      ...defaultConfig,
+      ...config,
     }
 
-    if (config && config.serializer) {
-      this.serializer = this.serializer
-    } else {
-      this.serializer = defaultSerializer
-    }
+    this.baseDir = realConfig.baseDir
+    this.serializer = realConfig.serializer
   }
 
   get = async <T>(key: string, def?: T) => {
