@@ -42,7 +42,9 @@ export class Cache implements CacheProvider {
     await Promise.all([this.provider.reset(key), this.provider.reset(metaKey)])
   }
 
-  async useCache<T>(key: string) {
+  async useCache<T>(
+    key: string,
+  ): Promise<[T | undefined, (v: T) => Promise<void>]> {
     const cached = await this.get<T>(key)
 
     const setCached = async (value: T) => {
