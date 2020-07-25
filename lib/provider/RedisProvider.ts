@@ -1,23 +1,19 @@
-import { createClient } from 'then-redis'
+import Redis from 'ioredis'
 
 import { CacheProvider } from './CacheProvider'
 import { Serializer } from './serializer/Serializer'
 import { defaultSerializer } from './serializer/defaultSerializer'
 
-interface Credentials {
-  host: string
-  port: number
-  password?: string
-}
+type Config = Redis.RedisOptions
 
 export class RedisProvider implements CacheProvider {
-  private readonly redisClient: any
+  private readonly redisClient: Redis.Redis
 
   constructor(
-    credentials: Credentials,
+    config: Config,
     private readonly serializer: Serializer = defaultSerializer,
   ) {
-    this.redisClient = createClient(credentials)
+    this.redisClient = new Redis(config)
   }
 
   get = async <T>(key: string, def?: T) => {
