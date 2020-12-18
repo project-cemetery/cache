@@ -32,6 +32,7 @@ workflows:
               only: /.*/
       - npm/publish:
           npm_token: NPM_TOKEN
+          legacy_mode: true
           filters:
             branches:
               ignore: /.*/
