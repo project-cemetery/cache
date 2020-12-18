@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/solid-soda/cache/compare/v0.5.0...v0.6.0) (2020-12-18)
+
+
+### Features
+
+* **multiple-providers:** add new provider ([dea4475](https://github.com/solid-soda/cache/commit/dea4475))
+* **redis:** allow use connection string as config ([4c0b3b1](https://github.com/solid-soda/cache/commit/4c0b3b1))
+
+
+
 ## [0.5.0](https://github.com/solid-soda/cache/compare/v0.4.1...v0.5.0) (2020-07-25)
 
 
