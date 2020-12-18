@@ -11,29 +11,29 @@ It provides features covering simple to advanced caching needs. It is designed f
 In example app we want to [redis](https://redis.io/) as cache-backend. Just create a simple cache instance:
 
 ```js
-import { Cache, RedisProvider } from '@solid-soda/cache'
+import { Cache, RedisProvider } from "@solid-soda/cache";
 
 const provider = new RedisProvider({
-  host: 'localhost',
+  host: "localhost",
   port: 6379,
-  password: 'password',
-})
+  password: "password",
+});
 
-export const cache = new Cache(provider)
+export const cache = new Cache(provider);
 ```
 
 That is all. We can use `cache` in any place of our application, or pass the result to DI container, etc.
 
 ```js
-import { cache } from './cache'
+import { cache } from "./cache";
 
 // ...
-let item = await cache.get('my-key')
+let item = await cache.get("my-key");
 if (!item) {
   // cache for key "my-key" not found
 
-  item = doHardWork()
-  await cache.set('my-key', item)
+  item = doHardWork();
+  await cache.set("my-key", item);
 }
 ```
 
@@ -44,30 +44,31 @@ if (!item) {
 `Cache#set` method has third argument `lifetime` (amount of mimilliseconds). You can pass it, and after this time cached item will be invalidate.
 
 It's a very simple mechanism:
-```ts
-import { Cache, InMemoryProvider } from '@solid-soda/cache'
 
-const provider = new InMemoryProvider()
-const cache = new Cache(provider)
+```ts
+import { Cache, InMemoryProvider } from "@solid-soda/cache";
+
+const provider = new InMemoryProvider();
+const cache = new Cache(provider);
 
 // ...
 
 async function doDeal() {
-  await cache.set('key', 'cached!', 1000)
+  await cache.set("key", "cached!", 1000);
 
-  await sleep(600)
+  await sleep(600);
 
-  const value1 = await cache.get('key') // 'cached!'
+  const value1 = await cache.get("key"); // 'cached!'
 
-  await sleep(600)
+  await sleep(600);
 
-  const value2 = await cache.get('key') // null
+  const value2 = await cache.get("key"); // null
 }
 ```
 
 ### Tag invalidation
 
-Will be released in 1.1.0
+Will be released later
 
 ## Providers
 
@@ -80,10 +81,10 @@ You can use many cache providers in your application.
 3. Cache can store any value (e.g. Promises), because it doesn't serialize it.
 
 ```js
-import { Cache, InMemoryProvider } from '@solid-soda/cache'
+import { Cache, InMemoryProvider } from "@solid-soda/cache";
 
-const provider = new InMemoryProvider()
-export const cache = new Cache(provider)
+const provider = new InMemoryProvider();
+export const cache = new Cache(provider);
 ```
 
 ### Redis provider
@@ -93,23 +94,23 @@ export const cache = new Cache(provider)
 3. Cache can store only serializable value.
 
 ```js
-import { Cache, RedisProvider } from '@solid-soda/cache'
+import { Cache, RedisProvider } from "@solid-soda/cache";
 
 const provider = new RedisProvider({
-  host: 'localhost',
+  host: "localhost",
   port: 6379,
-  password: 'password',
-})
-export const cache = new Cache(provider)
+  password: "password",
+});
+export const cache = new Cache(provider);
 ```
 
 If you want to use custom serializer, just pass it as second argument to `RedisProvider` constructor. [More about serializers.](#serializer)
 
 ```js
-import { Cache, RedisProvider } from '@solid-soda/cache'
+import { Cache, RedisProvider } from "@solid-soda/cache";
 
-const provider = new RedisProvider(credentials, serializer)
-export const cache = new Cache(provider)
+const provider = new RedisProvider(credentials, serializer);
+export const cache = new Cache(provider);
 ```
 
 ### FileSystemProvider
@@ -119,12 +120,12 @@ export const cache = new Cache(provider)
 3. Cache can store only serializable value.
 
 ```js
-import { Cache, FileSystemProvider } from '@solid-soda/cache'
+import { Cache, FileSystemProvider } from "@solid-soda/cache";
 
 const provider = new FileSystemProvider({
   baseDir: __dirname,
-})
-export const cache = new Cache(provider)
+});
+export const cache = new Cache(provider);
 ```
 
 If you don't pass `baseDir` it will be use `os.tmpdir`.
@@ -132,11 +133,39 @@ If you don't pass `baseDir` it will be use `os.tmpdir`.
 If you want to use custom serializer, just pass it to config in `FileSystemProvider` constructor. [More about serializers.](#serializer)
 
 ```js
-import { Cache, FileSystemProvider } from '@solid-soda/cache'
+import { Cache, FileSystemProvider } from "@solid-soda/cache";
 
-const provider = new FileSystemProvider({ baseDir: __dirname, serializer })
-export const cache = new Cache(provider)
+const provider = new FileSystemProvider({ baseDir: __dirname, serializer });
+export const cache = new Cache(provider);
 ```
+
+### MultipleProvidersProvider
+
+This provider allow you to use any numbers of providers, it'll spread values to all providers.
+
+```js
+import {
+  Cache,
+  MultipleProvidersProvider,
+  RedisProvider,
+  InMemoryProvider,
+} from "@solid-soda/cache";
+
+const provider = new MultipleProvidersProvider([
+  new RedisProvider({
+    host: "redis-1",
+    port: 6379,
+  }),
+  new RedisProvider({
+    host: "redis-2",
+    port: 6379,
+  }),
+]);
+
+export const cache = new Cache(provider);
+```
+
+> Common use case: cache is really large and application need more than one Redis to store it.
 
 ### Custom provider
 
@@ -144,29 +173,29 @@ This library can includes only limited number of providers, but you can create c
 
 ```ts
 interface CacheProvider {
-  get<T>(key: string, def?: T): Promise<T | undefined>
-  set<T>(key: string, value: T): Promise<void>
-  reset(key: string): Promise<void>
+  get<T>(key: string, def?: T): Promise<T | undefined>;
+  set<T>(key: string, value: T): Promise<void>;
+  reset(key: string): Promise<void>;
 }
 ```
 
 For example, we can create `CustomMemoryProvider`:
 
 ```ts
-import { CacheProvider } from '@solid-soda/cache'
+import { CacheProvider } from "@solid-soda/cache";
 
 export class CustomMemoryProvider implements CacheProvider {
-  private readonly cache = {}
+  private readonly cache = {};
 
-  get = async (key, def) => this.cache[key] || def
+  get = async (key, def) => this.cache[key] || def;
 
   set = async (key, value) => {
-    this.cache[key] = value
-  }
+    this.cache[key] = value;
+  };
 
   reset = async (key) => {
-    this.cache[key] = undefined
-  }
+    this.cache[key] = undefined;
+  };
 }
 ```
 
@@ -177,14 +206,16 @@ Brilliant! Create the provider instance and pass in to `Cache`.
 If can provider stores only string value, you can pass `serializer` to it. If you don't, provider will use default serializer based on `JSON.parse` and `JSON.stringify`.
 
 Any serizliser must implements `Serializer` interface:
+
 ```ts
 interface Serializer {
-  serialize<T>(value: T): Promise<string>
-  deserialize<T>(value: string): Promise<T>
+  serialize<T>(value: T): Promise<string>;
+  deserialize<T>(value: string): Promise<T>;
 }
 ```
 
 Custom serializer example:
+
 ```ts
 import { Serializer } from '@solid-soda/cache'
 
@@ -199,7 +230,3 @@ const fastSerizliser: Serializer = {
   },
 }
 ```
-
-## TypeScript decorator
-
-Will be released in 1.1.0
