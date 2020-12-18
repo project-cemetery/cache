@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  npm: checkmoney/npm@1.1.0
+  npm: checkmoney/npm@1.1.2
   yarn: checkmoney/yarn@1.0.0
 workflows:
   version: 2
