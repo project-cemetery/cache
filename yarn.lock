@@ -1402,6 +1402,11 @@ concat-stream@^2.0.0:
     readable-stream "^3.0.2"
     typedarray "^0.0.6"
 
+connection-string@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/connection-string/-/connection-string-4.3.1.tgz#3d3629bc8606393c07920bb14ec1b61d8d891629"
+  integrity sha512-Nj3j+uhEzxUIMJLkCC1cpSKjb9S/VBwVe1KIbLZRyx0xgzqfXqJCN3/3IAecSH34q1Py4kNBBavgyskvkQyTnw==
+
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
