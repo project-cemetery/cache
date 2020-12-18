@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "yarn build",
-    "ci": "yarn types && yarn test && yarn s lint",
+    "lint": "yarn s lint",
     "test": "jest",
     "types": "tsc --noEmit",
     "s": "yarn soda"

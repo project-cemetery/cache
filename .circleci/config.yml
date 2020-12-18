@@ -1,12 +1,12 @@
 version: 2.1
 orbs:
   npm: checkmoney/npm@1.1.0
-  yarn-berry: checkmoney/yarn-berry@1.0.0
+  yarn: checkmoney/yarn@1.0.0
 workflows:
   version: 2
   build:
     jobs:
-      - yarn-berry/local:
+      - yarn/local:
           name: types
           command: "types"
           filters:
@@ -14,7 +14,7 @@ workflows:
               only: /.*/
             tags:
               only: /.*/
-      - yarn-berry/local:
+      - yarn/local:
           name: test
           command: "test"
           filters:
@@ -22,7 +22,7 @@ workflows:
               only: /.*/
             tags:
               only: /.*/
-      - yarn-berry/local:
+      - yarn/local:
           name: lint
           command: "lint"
           filters:
