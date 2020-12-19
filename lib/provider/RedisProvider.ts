@@ -19,7 +19,7 @@ export class RedisProvider implements CacheProvider {
 
       this.redisClient = new Redis({
         port: parsed.port,
-        host: parsed.host,
+        host: parsed.hostname,
         username: parsed.user,
         password: parsed.password,
       })
